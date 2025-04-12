@@ -453,7 +453,9 @@ def test_destination_datetime_tzinfo_datetime_timezone_utc_no_orig_tz():
         assert time.tzname == orig_tzname
 
 
-@pytest.mark.skipif(sys.version_info < (3, 11), reason="datetime.UTC was introduced in Python 3.11")
+@pytest.mark.skipif(
+    sys.version_info < (3, 11), reason="datetime.UTC was introduced in Python 3.11"
+)
 def test_destination_datetime_tzinfo_datetime_utc_no_orig_tz():
     with change_local_timezone(None):
         orig_tzname = time.tzname
