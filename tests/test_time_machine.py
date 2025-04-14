@@ -434,9 +434,15 @@ def test_destination_datetime_tzinfo_zoneinfo_no_orig_tz():
         with time_machine.travel(dest):
             assert time.tzname == ("EAT", "EAT")
 
-        dest2 = LIBRARY_EPOCH_DATETIME.replace(tzinfo=ZoneInfo("UTC"))
+        assert time.tzname == orig_tzname
 
-        with time_machine.travel(dest2):
+
+def test_destination_datetime_tzinfo_zoneinfo_utc_no_orig_tz():
+    with change_local_timezone(None):
+        orig_tzname = time.tzname
+        dest = LIBRARY_EPOCH_DATETIME.replace(tzinfo=ZoneInfo("UTC"))
+
+        with time_machine.travel(dest):
             assert time.tzname == ("UTC", "UTC")
 
         assert time.tzname == orig_tzname
