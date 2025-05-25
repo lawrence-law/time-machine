@@ -35,7 +35,7 @@ jobs:
         allow-prereleases: true
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      uses: astral-sh/setup-uv@v6
       with:
         enable-cache: true
 
@@ -65,7 +65,7 @@ jobs:
           python-version: '3.13'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
 
       - name: Install dependencies
         run: uv pip install --system coverage[toml]
@@ -106,7 +106,7 @@ jobs:
         - macos
         - windows
 
-    runs-on: ${{ (matrix.os == 'linux' && 'ubuntu-24.04') || (matrix.os == 'macos' && 'macos-14') || (matrix.os == 'windows' && 'windows-2022') || 'unknown' }}
+    runs-on: ${{ (matrix.os == 'linux' && 'ubuntu-24.04') || (matrix.os == 'macos' && 'macos-15') || (matrix.os == 'windows' && 'windows-2022') || 'unknown' }}
 
     env:
       CIBW_ARCHS_LINUX: x86_64 i686 aarch64
@@ -117,7 +117,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v6
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -130,7 +130,7 @@ jobs:
         run: uv build --sdist
 
       - name: Build wheels
-        run: uvx --from cibuildwheel==2.20.0 cibuildwheel --output-dir dist
+        run: uvx --from cibuildwheel==2.23.2 cibuildwheel --output-dir dist
 
       - run: ${{ (matrix.os == 'windows' && 'dir') || 'ls -lh' }} dist/
 
